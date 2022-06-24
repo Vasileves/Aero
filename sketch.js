@@ -18,13 +18,14 @@ function setup() {
 //color ifs
 aqi = APIdata.data.current.pollution.aqius;
 
-  if (aqi <= 50) {
-  dots = "255,255,255,100";
+  if (aqi <= 40) {
+  dots = "#ABABB7";
+ // dots = "255,255,255,50";
   descr = "What a nice day to take a walk";
 
     
-  } else if (aqi > 50 && aqi <= 60) {
-    dots = "#999966";
+  } else if (aqi > 40 && aqi <= 60) {
+    dots = "#CEBFA0";
     descr = "Open your windows, the wind is almost pure";
     
   } else if (aqi > 60 && aqi <= 100) {
@@ -36,7 +37,8 @@ aqi = APIdata.data.current.pollution.aqius;
     descr = "Dude how are you still alive?";
   } 
   }
-    
+
+  
     
   }
   
@@ -49,17 +51,16 @@ aqi = APIdata.data.current.pollution.aqius;
 function preload() {
   let url = 'https://api.airvisual.com/v2/nearest_city?key=8181bc4b-a747-42e0-b3b4-ccd486557c75';
   APIdata = loadJSON(url); // saves the API data into this variable
-//   myFont = textFont("Onest");
 }
 
 
 
 function draw() {
+    background(0,0,20,8);
+
   
 
-  background(0,0,20,10);
-
-  num = aqi*20;
+  num = aqi*40;
   city = APIdata.data.city;
   wind = APIdata.data.current.weather.ws;
   noiseScale = 0.0009;
@@ -70,14 +71,14 @@ function draw() {
   for(let i = 0; i < num; i ++) {
     let p = particles[i];
     point(p.x, p.y);
-    strokeWeight(1.2);
+    strokeWeight(2);
     stroke(dots);
     let n = noise(p.x * noiseScale, p.y * noiseScale, frameCount * noiseScale * noiseScale);
     let a = TAU * n;
     // p.x += cos(m*cos(a)); //change to m
     // p.y += cos(a);
-    p.x += sin(2*a)*wind/5; //change to m
-    p.y += cos(2*a)*wind/5;
+    p.x += sin(4*a)*wind/5; //change to m
+    p.y += cos(4*a)*wind/5;
     
     m=random(100);
     if(!onScreen(p)) {
@@ -90,13 +91,16 @@ function draw() {
   fill("#ffffff");
   textFont("Onest");
   textSize(140);
-  text(city + " " + aqi, 50, 200);
+  text(city, 50, 200);
   textSize(40);
   text(descr, 60, 270);
-  stroke("white");
-  strokeWeight(2);
-  background(0,0);
-  rect(0, 0, windowWidth-30, windowHeight-30,);
+  textSize(20);
+  text("AQI: " + aqi, 60,320);
+
+  noFill();
+  stroke(255);  
+  strokeWeight(3);
+  rect(0,0,windowWidth-31,windowHeight-31,20);
 
 }
 
