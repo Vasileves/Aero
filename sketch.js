@@ -26,7 +26,7 @@ aqi = APIdata.data.current.pollution.aqius;
     
   } else if (aqi > 40 && aqi <= 60) {
     dots = "#CEBFA0";
-    descr = "Open your windows, the wind is almost pure";
+    descr = "Open your windows, the air is almost pure";
     
   } else if (aqi > 60 && aqi <= 100) {
     dots = "#956b56";
